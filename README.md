@@ -1,6 +1,9 @@
 Sina App Engine Java channel 服务使用范例，基于channel服务实现了一个WebSocket的九宫格游戏
 
+
+
 实现简要介绍
+
 
 1.玩家1首次打开游戏页面为用户创建一个channel，同时实例化一个Game对象存储至缓存（Memcache）中，等待其他玩家加入;
 
@@ -42,6 +45,8 @@ game.put();//game保存至缓存
  var channel = sae.Channel(url);
  
  channel.onmessage = function(message){
+ 
  	 updateGame(message);
+ 	 
  }
  

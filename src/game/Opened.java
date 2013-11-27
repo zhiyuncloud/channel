@@ -26,6 +26,7 @@ public class Opened extends HttpServlet {
 		String gameKey = request.getParameter("g");
 		Game game = Game.getGameByKey(gameKey);
 		String gamejson = JSONObject.fromObject(game).toString();
+		//将消息（游戏信息）推送到x和o玩家的channel中
 		channel.sendMessage(game.getUserO()+gameKey, gamejson);
 		channel.sendMessage(game.getUserX()+gameKey, gamejson);
 	}

@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>SJava Channel Example</title>
+<title>Java Channel Example</title>
 <script src='http://channel.sinaapp.com/api.js'></script>
       <style type='text/css'>
         body {
@@ -109,7 +109,7 @@
 	   		url = isX?game.getChannelX():game.getChannelO();//根据用户指定相应的WebSocket url
 	   	} else{
 	   		String opt =  request.getParameter("opt");
-	   		if("change".equals(opt)&&session.getAttribute("user")!=null){
+	   		if("change".equals(opt)&&session.getAttribute("user")!=null){//更换用户操作
 	   			user = UUID.randomUUID().toString().replace("-", "");
 	    		session.setAttribute("user", user);
 	   		}
@@ -127,7 +127,7 @@
 	  var game = eval("("+'<%=JSONObject.fromObject(game).toString()%>'+")");
 	  var player = '<%=isX?"x":"o"%>';
 	  
-      updateGame = function() {
+      updateGame = function() {//更新游戏，每次接到消息推送时调用
     	var xSquares = game.xSquares;
     	var oSquares = game.oSquares;
     	for(var i = 0; i < xSquares.length; i++){
@@ -149,6 +149,7 @@
 		 }
       };
        
+      //调用服务端post接口
       sendMessage = function(path, opt_param) {
         path += '?g=' + '<%=gameKey%>'+"&u="+player;
         if (opt_param) {
@@ -178,10 +179,12 @@
     	  }
       };
       
+      //Channel打开时候调用
       onOpened = function() {
         sendMessage('/opened');
       };
       
+      //接到消息时候调用
       onMessage = function(m) {
         game = eval("("+m.data+")");
         updateGame();

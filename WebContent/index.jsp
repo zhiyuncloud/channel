@@ -126,7 +126,7 @@
 		
 	  var game = eval("("+'<%=JSONObject.fromObject(game).toString()%>'+")");
 	  var player = '<%=isX?"x":"o"%>';
-	  
+	  var count = 1;
       updateGame = function() {//更新游戏，每次接到消息推送时调用
     	var xSquares = game.xSquares;
     	var oSquares = game.oSquares;
@@ -181,11 +181,13 @@
       
       //Channel打开时候调用
       onOpened = function() {
+    	alert(count++);
         sendMessage('/opened');
       };
       
       //接到消息时候调用
       onMessage = function(m) {
+    	alert(m);
         game = eval("("+m.data+")");
         updateGame();
       };

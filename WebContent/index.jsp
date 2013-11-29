@@ -181,13 +181,11 @@
       
       //Channel打开时候调用
       onOpened = function() {
-    	alert(count++);
         sendMessage('/opened');
       };
       
       //接到消息时候调用
       onMessage = function(m) {
-    	alert(m);
         game = eval("("+m.data+")");
         updateGame();
       };

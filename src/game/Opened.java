@@ -24,11 +24,13 @@ public class Opened extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String gameKey = request.getParameter("g");
-		Game game = Game.getGameByKey(gameKey);
-		String gamejson = JSONObject.fromObject(game).toString();
-		//将消息（游戏信息）推送到x和o玩家的channel中
-		channel.sendMessage(game.getUserO()+gameKey, gamejson);
-		channel.sendMessage(game.getUserX()+gameKey, gamejson);
+		String u = request.getParameter("u");
+		//当玩家o加入时将消息（游戏信息）推送到x玩家的channel中
+		if("o".equals(u)){
+			Game game = Game.getGameByKey(gameKey);
+			String gamejson = JSONObject.fromObject(game).toString();
+			channel.sendMessage(game.getUserX()+gameKey, gamejson);
+		}
 	}
 	
 	
